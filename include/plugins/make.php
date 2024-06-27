@@ -1,12 +1,10 @@
 <?php
 
-class Option
-{
+class Option {
 
     var $default = false;
 
-    function __construct($options = false)
-    {
+    function __construct($options=false) {
         list($this->short, $this->long) = array_slice($options, 0, 2);
         $this->help = (isset($options['help'])) ? $options['help'] : "";
         $this->action = (isset($options['action'])) ? $options['action']
@@ -25,14 +23,12 @@ class Option
             : 1;
     }
 
-    function hasArg()
-    {
+    function hasArg() {
         return $this->action != 'store_true'
             && $this->action != 'store_false';
     }
 
-    function handleValue(&$destination, $args)
-    {
+    function handleValue(&$destination, $args) {
         $nargs = 0;
         $value = ($this->hasArg()) ? array_shift($args) : null;
         if ($value[0] == '-')
@@ -68,24 +64,15 @@ class Option
         return $nargs;
     }
 
-    function toString()
-    {
+    function toString() {
         $short = explode(':', $this->short);
         $long = explode(':', $this->long);
         if ($this->nargs === '?')
-            $switches = sprintf(
-                '    %s [%3$s], %s[=%3$s]',
-                $short[0],
-                $long[0],
-                $this->metavar
-            );
+            $switches = sprintf('    %s [%3$s], %s[=%3$s]', $short[0],
+                $long[0], $this->metavar);
         elseif ($this->hasArg())
-            $switches = sprintf(
-                '    %s %3$s, %s=%3$s',
-                $short[0],
-                $long[0],
-                $this->metavar
-            );
+            $switches = sprintf('    %s %3$s, %s=%3$s', $short[0], $long[0],
+                $this->metavar);
         else
             $switches = sprintf("    %s, %s", $short[0], $long[0]);
         $help = preg_replace('/\s+/', ' ', $this->help);
@@ -98,23 +85,19 @@ class Option
     }
 }
 
-class OutputStream
-{
+class OutputStream {
     var $stream;
 
-    function __construct($stream)
-    {
+    function __construct($stream) {
         $this->stream = fopen($stream, 'w');
     }
 
-    function write($what)
-    {
+    function write($what) {
         fwrite($this->stream, $what);
     }
 }
 
-class Module
-{
+class Module {
 
     var $options = array();
     var $arguments = array();
@@ -130,21 +113,17 @@ class Module
     var $_options;
     var $_args;
 
-    function __construct()
-    {
-        $this->options['help'] = array(
-            "-h", "--help",
-            'action' => 'store_true',
-            'help' => "Display this help message"
-        );
+    function __construct() {
+        $this->options['help'] = array("-h","--help",
+            'action'=>'store_true',
+            'help'=>"Display this help message");
         foreach ($this->options as &$opt)
             $opt = new Option($opt);
         $this->stdout = new OutputStream('php://output');
         $this->stderr = new OutputStream('php://stderr');
     }
 
-    function showHelp()
-    {
+    function showHelp() {
         if ($this->prologue)
             echo $this->prologue . "\n\n";
 
@@ -153,37 +132,30 @@ class Module
 
         echo "Usage:\n";
         echo "    " . str_replace(
-            array('$script', '$args'),
-            array($manager . " " . $this->module_name, implode(' ', array_keys($this->arguments))),
-            $this->usage
-        ) . "\n";
+                array('$script', '$args'),
+                array($manager ." ". $this->module_name, implode(' ', array_keys($this->arguments))),
+            $this->usage) . "\n";
 
         ksort($this->options);
         if ($this->options) {
             echo "\nOptions:\n";
-            foreach ($this->options as $name => $opt)
+            foreach ($this->options as $name=>$opt)
                 echo $opt->toString() . "\n";
         }
 
         if ($this->arguments) {
             echo "\nArguments:\n";
-            foreach ($this->arguments as $name => $help) {
+            foreach ($this->arguments as $name=>$help) {
                 $extra = '';
                 if (isset($help['options']) && is_array($help['options'])) {
-                    foreach ($help['options'] as $op => $desc)
+                    foreach($help['options'] as $op=>$desc)
                         $extra .= wordwrap(
-                            "\n        $op - $desc",
-                            76,
-                            "\n            "
-                        );
+                            "\n        $op - $desc", 76, "\n            ");
                 }
                 $help = $help['help'];
                 echo $name . "\n    " . wordwrap(
-                    preg_replace('/\s+/', ' ', $help),
-                    76,
-                    "\n    "
-                )
-                    . $extra . "\n";
+                    preg_replace('/\s+/', ' ', $help), 76, "\n    ")
+                        .$extra."\n";
             }
         }
 
@@ -196,16 +168,14 @@ class Module
         echo "\n";
     }
 
-    function fail($message, $showhelp = false)
-    {
+    function fail($message, $showhelp=false) {
         $this->stderr->write($message . "\n");
         if ($showhelp)
             $this->showHelp();
         die();
     }
 
-    function getOption($name, $default = false)
-    {
+    function getOption($name, $default=false) {
         $this->parseOptions();
         if (isset($this->_options[$name]))
             return $this->_options[$name];
@@ -215,16 +185,14 @@ class Module
             return $default;
     }
 
-    function getArgument($name, $default = false)
-    {
+    function getArgument($name, $default=false) {
         $this->parseOptions();
         if (isset($this->_args[$name]))
             return $this->_args[$name];
         return $default;
     }
 
-    function parseOptions()
-    {
+    function parseOptions() {
         if (is_array($this->_options))
             return;
 
@@ -232,25 +200,25 @@ class Module
         list($this->_options, $this->_args) =
             $this->parseArgs(array_slice($argv, 1));
 
-        foreach (array_keys($this->arguments) as $idx => $name) {
+        foreach (array_keys($this->arguments) as $idx=>$name) {
             if (!is_array($this->arguments[$name]))
                 $this->arguments[$name] = array(
-                    'help' => $this->arguments[$name]
-                );
+                    'help' => $this->arguments[$name]);
             $this->arguments[$name]['idx'] = $idx;
         }
 
-        foreach ($this->arguments as $name => $info) {
+        foreach ($this->arguments as $name=>$info) {
             if (!isset($this->_args[$info['idx']])) {
                 if (isset($info['required']) && !$info['required'])
                     continue;
                 $this->optionError($name . " is a required argument");
-            } else {
+            }
+            else {
                 $this->_args[$name] = &$this->_args[$info['idx']];
             }
         }
 
-        foreach ($this->options as $name => $opt)
+        foreach ($this->options as $name=>$opt)
             if (!isset($this->_options[$name]))
                 $this->_options[$name] = $opt->default;
 
@@ -260,41 +228,34 @@ class Module
         }
     }
 
-    function optionError($error)
-    {
+    function optionError($error) {
         echo "Error: " . $error . "\n\n";
         $this->showHelp();
         die();
     }
 
-    function _run($module_name)
-    {
+    function _run($module_name) {
         $this->module_name = $module_name;
         $this->parseOptions();
         return $this->run($this->_args, $this->_options);
     }
 
     /* abstract */
-    function run($args, $options)
-    {
+    function run($args, $options) {
     }
 
     /* static */
-    function register($action, $class)
-    {
+    function register($action, $class) {
         global $registered_modules;
         $registered_modules[$action] = new $class();
     }
 
-    /* static */
-    function getInstance($action)
-    {
+    /* static */ function getInstance($action) {
         global $registered_modules;
         return $registered_modules[$action];
     }
 
-    function parseArgs($argv)
-    {
+    function parseArgs($argv) {
         $options = $args = array();
         $argv = array_slice($argv, 0);
         while ($arg = array_shift($argv)) {
@@ -317,10 +278,9 @@ class Module
     }
 }
 
-class PluginBuilder extends Module
-{
+class PluginBuilder extends Module {
     var $prologue =
-    "Inspects, tests, and builds a plugin PHAR file";
+        "Inspects, tests, and builds a plugin PHAR file";
 
     var $arguments = array(
         'action' => array(
@@ -339,32 +299,25 @@ class PluginBuilder extends Module
     );
 
     var $options = array(
-        'sign' => array('-S', '--sign', 'metavar' => 'KEY', 'help' =>
-        'Sign the compiled PHAR file with the provided OpenSSL private
+        'sign' => array('-S','--sign', 'metavar'=>'KEY', 'help'=>
+            'Sign the compiled PHAR file with the provided OpenSSL private
             key file'),
-        'verbose' => array('-v', '--verbose', 'help' =>
-        'Be more verbose', 'default' => false, 'action' => 'store_true'),
-        'compress' => array(
-            '-z', '--compress', 'help' =>
+        'verbose' => array('-v','--verbose','help'=>
+            'Be more verbose','default'=>false, 'action'=>'store_true'),
+        'compress' => array('-z', '--compress', 'help' =>
             'Compress source files when hydrading and building. Useful for
             saving space when building PHAR files',
-            'action' => 'store_true', 'default' => false
-        ),
-        "key" => array(
-            '-k', '--key', 'metavar' => 'API-KEY',
-            'help' => 'Crowdin project API key.'
-        ),
-        'osticket' => array(
-            '-R', '--osticket', 'metavar' => 'ROOT',
-            'help' => 'Root of osTicket installation (required for language compilation)'
-        ),
+            'action'=>'store_true', 'default'=>false),
+        "key" => array('-k','--key','metavar'=>'API-KEY',
+            'help'=>'Crowdin project API key.'),
+        'osticket' => array('-R', '--osticket', 'metavar'=>'ROOT',
+            'help'=>'Root of osTicket installation (required for language compilation)'),
     );
 
     static $project = 'osticket-plugins';
     static $crowdin_api_url = 'http://i18n.osticket.com/api/project/{project}/{command}';
 
-    function run($args, $options)
-    {
+    function run($args, $options) {
         $this->key = $options['key'];
         if (!$this->key && defined('CROWDIN_API_KEY'))
             $this->key = CROWDIN_API_KEY;
@@ -374,58 +327,55 @@ class PluginBuilder extends Module
         }
 
         switch (strtolower($args['action'])) {
-            case 'build':
-                $plugin = $args['plugin'];
+        case 'build':
+            $plugin = $args['plugin'];
 
-                if (!file_exists($plugin))
-                    $this->fail("Plugin folder '$plugin' does not exist");
+            if (!file_exists($plugin))
+                $this->fail("Plugin folder '$plugin' does not exist");
 
-                $this->_build($plugin, $options);
-                break;
+            $this->_build($plugin, $options);
+            break;
 
-            case 'hydrate':
-                $this->_hydrate($options);
-                break;
-            case 'list':
-                $P = new Phar($args[1]);
-                $base = realpath($args[1]);
-                foreach (new RecursiveIteratorIterator($P) as $finfo) {
-                    $name = str_replace('phar://' . $base . '/', '', $finfo->getPathname());
-                    $this->stdout->write($name . "\n");
-                }
-                break;
+        case 'hydrate':
+            $this->_hydrate($options);
+            break;
+        case 'list':
+            $P = new Phar($args[1]);
+            $base = realpath($args[1]);
+            foreach (new RecursiveIteratorIterator($P) as $finfo) {
+                $name = str_replace('phar://'.$base.'/', '', $finfo->getPathname());
+                $this->stdout->write($name . "\n");
+            }
+            break;
 
-            case 'list':
-                $plugin = $args['plugin'];
-                if (!file_exists($plugin))
-                    $this->fail("PHAR file '$plugin' does not exist");
+        case 'list':
+            $plugin = $args['plugin'];
+            if (!file_exists($plugin))
+                $this->fail("PHAR file '$plugin' does not exist");
 
-                $p = new Phar($plugin);
-                $total = 0;
-                foreach (new RecursiveIteratorIterator($p) as $info) {
-                    $this->stdout->write(sprintf(
-                        "% 10.10d  %s  %s\n",
-                        $info->getSize(),
-                        strftime('%x %X', $info->getMTime()),
-                        str_replace(
-                            array('phar://', realpath($plugin) . '/'),
-                            array('', ''),
-                            (string) $info
-                        )
-                    ));
-                    $total += $info->getSize();
-                }
-                $this->stdout->write("---------------------------------------\n");
-                $this->stdout->write(sprintf("% 10.10d\n", $total));
-                break;
+            $p = new Phar($plugin);
+            $total = 0;
+            foreach (new RecursiveIteratorIterator($p) as $info) {
+                $this->stdout->write(sprintf(
+                    "% 10.10d  %s  %s\n",
+                    $info->getSize(),
+                    strftime('%x %X', $info->getMTime()),
+                    str_replace(
+                        array('phar://', realpath($plugin).'/'),
+                        array('',''),
+                        (string) $info)));
+                $total += $info->getSize();
+            }
+            $this->stdout->write("---------------------------------------\n");
+            $this->stdout->write(sprintf("% 10.10d\n", $total));
+            break;
 
-            default:
-                $this->fail("Unsupported MAKE action. See help");
+        default:
+            $this->fail("Unsupported MAKE action. See help");
         }
     }
 
-    function _build($plugin, $options)
-    {
+    function _build($plugin, $options) {
         @unlink("$plugin.phar");
         $phar = new Phar("$plugin.phar");
         $phar->startBuffering();
@@ -434,8 +384,7 @@ class PluginBuilder extends Module
             if (!function_exists('openssl_get_privatekey'))
                 $this->fail('OpenSSL extension required for signing');
             $private = openssl_get_privatekey(
-                file_get_contents($options['sign'])
-            );
+                    file_get_contents($options['sign']));
             $pkey = '';
             openssl_pkey_export($private, $pkey);
             $phar->setSignatureAlgorithm(Phar::OPENSSL, $pkey);
@@ -451,18 +400,17 @@ class PluginBuilder extends Module
         // Add library dependencies
         if (isset($info['requires'])) {
             $includes = array();
-            foreach ($info['requires'] as $lib => $info) {
+            foreach ($info['requires'] as $lib=>$info) {
                 if (!isset($info['map']))
                     continue;
-                foreach ($info['map'] as $lib => $local) {
+                foreach ($info['map'] as $lib=>$local) {
                     if (preg_match('/{+(.*?)}/', $lib))
                         $lib = dirname($lib);
-                    $phar_path = trim($local, '/') . '/';
-                    $full = rtrim(dirname(__file__) . '/lib/' . $lib, '/') . '/';
+                    $phar_path = trim($local, '/').'/';
+                    $full = rtrim(dirname(__file__).'/lib/'.$lib,'/').'/';
                     $files = new RecursiveIteratorIterator(
                         new RecursiveDirectoryIterator($full),
-                        RecursiveIteratorIterator::SELF_FIRST
-                    );
+                            RecursiveIteratorIterator::SELF_FIRST);
                     foreach ($files as $f) {
                         if (file_exists("$plugin/$phar_path"))
                             // Hydrated
@@ -477,12 +425,13 @@ class PluginBuilder extends Module
                         $content = '';
                         $local = str_replace($full, $phar_path, $f->getPathname());
                         if ($options['compress'] && fnmatch('*.php', $f->getPathname())) {
-                            $p = popen('php -w ' . realpath($f->getPathname()), 'r');
+                            $p = popen('php -w '.realpath($f->getPathname()), 'r');
                             while ($b = fread($p, 8192))
                                 $content .= $b;
                             fclose($p);
                             $phar->addFromString($local, $content);
-                        } else {
+                        }
+                        else {
                             $phar->addFile($f->getPathname(), $local);
                         }
                     }
@@ -492,12 +441,13 @@ class PluginBuilder extends Module
 
         // Add language files
         if (@$this->key) {
-            foreach ($this->getLanguageFiles($plugin) as $name => $content) {
+            foreach ($this->getLanguageFiles($plugin) as $name=>$content) {
                 $name = ltrim($name, '/');
                 if (!$content) continue;
                 $phar->addFromString("i18n/{$name}", $content);
             }
-        } else {
+        }
+        else {
             $this->stderr->write("Specify Crowdin API key to integrate language files\n");
         }
 
@@ -505,23 +455,22 @@ class PluginBuilder extends Module
         $phar->stopBuffering();
     }
 
-    function _hydrate($options)
-    {
+    function _hydrate($options) {
         $this->resolveDependencies();
 
         // Move things into place
-        foreach (glob(dirname(__file__) . '/*/plugin.php') as $plugin) {
+        foreach (glob(dirname(__file__).'/*/plugin.php') as $plugin) {
             $p = (include $plugin);
             if ((!isset($p['requires']) || !is_array($p['requires'])) && !isset($p['map']))
                 continue;
             if (isset($p['requires'])) {
-                foreach ($p['requires'] as $lib => $info) {
+                foreach ($p['requires'] as $lib=>$info) {
                     // Map composer dependencies
                     if (!isset($info['map']) || !is_array($info['map']))
                         continue;
-                    foreach ($info['map'] as $lib => $local) {
-                        $source = dirname(__file__) . '/lib/' . $lib;
-                        $dest = dirname($plugin) . '/' . $local;
+                    foreach ($info['map'] as $lib=>$local) {
+                        $source = dirname(__file__).'/lib/'.$lib;
+                        $dest = dirname($plugin).'/'.$local;
                         $this->mapDependencies($options, $lib, $local, $source, $dest);
                     }
                     // TODO: Fetch language files for this plugin
@@ -530,19 +479,18 @@ class PluginBuilder extends Module
             // Map custom dependencies
             if (!isset($p['map']) || !is_array($p['map']))
                 continue;
-            foreach ($p['map'] as $lib => $local) {
-                $source = dirname(__file__) . '/lib/' . $lib;
-                $dest = dirname($plugin) . '/' . $local;
+            foreach ($p['map'] as $lib=>$local) {
+                $source = dirname(__file__).'/lib/'.$lib;
+                $dest = dirname($plugin).'/'.$local;
                 $this->mapDependencies($options, $lib, $local, $source, $dest);
             }
         }
     }
 
-    function mapDependencies($options, $lib, $local, $source, $dest)
-    {
+    function mapDependencies($options, $lib, $local, $source, $dest) {
         if ($this->options['verbose']) {
-            $left = str_replace(dirname(__file__) . '/', '', $source);
-            $right = str_replace(dirname(__file__) . '/', '', $dest);
+            $left = str_replace(dirname(__file__).'/', '', $source);
+            $right = str_replace(dirname(__file__).'/', '', $dest);
             $this->stdout->write("Hydrating :: $left => $right\n");
         }
         if (is_file($source)) {
@@ -553,20 +501,16 @@ class PluginBuilder extends Module
         // See if we need to do filtering via expandable search
         if (preg_match('/{+(.*?)}/', $source)) {
             foreach (glob($source, GLOB_BRACE) as $_source)
-                $this->mapDependencies(
-                    $options,
-                    $lib,
-                    $local,
-                    $_source,
-                    ($dest . '/' . basename($_source))
-                );
+                $this->mapDependencies($options, $lib, $local, $_source,
+                 ($dest.'/'.basename($_source)));
             return;
         }
 
-        foreach ($iterator = new RecursiveIteratorIterator(
+        foreach (
+            $iterator = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::SELF_FIRST
-            ) as $item) {
+                    RecursiveIteratorIterator::SELF_FIRST) as $item
+        ) {
             if ($item->isDir())
                 continue;
 
@@ -576,20 +520,20 @@ class PluginBuilder extends Module
                 mkdir($parent, 0777, true);
             // Compress PHP files
             if ($options['compress'] && fnmatch('*.php', $item)) {
-                $p = popen('php -w ' . realpath($item), 'r');
+                $p = popen('php -w '.realpath($item), 'r');
                 $T = fopen($target, 'w');
                 while ($b = fread($p, 8192))
                     fwrite($T, $b);
                 fclose($p);
                 fclose($T);
-            } else {
+            }
+            else {
                 copy($item, $target);
             }
         }
     }
 
-    function _http_get($url)
-    {
+    function _http_get($url) {
         #curl post
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -597,21 +541,18 @@ class PluginBuilder extends Module
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $result = curl_exec($ch);
+        $result=curl_exec($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
         return array($code, $result);
     }
 
-    function _crowdin($command, $args = array())
-    {
+    function _crowdin($command, $args=array()) {
 
-        $url = str_replace(
-            array('{command}', '{project}'),
+        $url = str_replace(array('{command}', '{project}'),
             array($command, self::$project),
-            self::$crowdin_api_url
-        );
+            self::$crowdin_api_url);
 
         $args += array('key' => $this->key);
         foreach ($args as &$a)
@@ -622,14 +563,13 @@ class PluginBuilder extends Module
         return $this->_http_get($url);
     }
 
-    function getTranslations()
-    {
+    function getTranslations() {
         error_reporting(E_ALL);
         list($code, $body) = $this->_crowdin('status');
         $langs = array();
 
         if ($code != 200) {
-            $this->stderr->write($code . ": Bad status from Crowdin fetching translations\n");
+            $this->stderr->write($code.": Bad status from Crowdin fetching translations\n");
             return $langs;
         }
         $d = new DOMDocument();
@@ -640,12 +580,12 @@ class PluginBuilder extends Module
             $name = $code = '';
             foreach ($c->childNodes as $n) {
                 switch (strtolower($n->nodeName)) {
-                    case 'name':
-                        $name = $n->textContent;
-                        break;
-                    case 'code':
-                        $code = $n->textContent;
-                        break;
+                case 'name':
+                    $name = $n->textContent;
+                    break;
+                case 'code':
+                    $code = $n->textContent;
+                    break;
                 }
             }
             if (!$code)
@@ -655,8 +595,7 @@ class PluginBuilder extends Module
         return $langs;
     }
 
-    function getLanguageFiles($plugin)
-    {
+    function getLanguageFiles($plugin) {
         $files = array();
         if (!class_exists('Translation'))
             $this->stderr->write("Specify osTicket root path to compile MO files\n");
@@ -668,7 +607,7 @@ class PluginBuilder extends Module
                 continue;
             }
 
-            $lang = str_replace('-', '_', $lang);
+            $lang = str_replace('-','_',$lang);
 
             // Extract a few files from the zip archive
             $temp = tempnam('/tmp', 'osticket-cli');
@@ -679,7 +618,7 @@ class PluginBuilder extends Module
             $zip->open($temp);
             unlink($temp);
 
-            for ($i = 0; $i < $zip->numFiles; $i++) {
+            for ($i=0; $i<$zip->numFiles; $i++) {
                 $info = $zip->statIndex($i);
                 if (strpos($info['name'], $plugin) === 0) {
                     $name = substr($info['name'], strlen($plugin));
@@ -687,7 +626,8 @@ class PluginBuilder extends Module
                     if (substr($name, -3) == '.po' && class_exists('Translation')) {
                         $content = $this->buildMo($zip->getFromIndex($i));
                         $name = substr($name, 0, -3) . '.mo.php';
-                    } else {
+                    }
+                    else {
                         $content = $zip->getFromIndex($i);
                     }
                     // Files in the plugin are laid out by (lang)/(file),
@@ -701,14 +641,11 @@ class PluginBuilder extends Module
         return $files;
     }
 
-    function buildMo($po_contents)
-    {
+    function buildMo($po_contents) {
         $pipes = array();
-        $msgfmt = proc_open(
-            'msgfmt -o- -',
-            array(0 => array('pipe', 'r'), 1 => array('pipe', 'w')),
-            $pipes
-        );
+        $msgfmt = proc_open('msgfmt -o- -',
+            array(0=>array('pipe','r'), 1=>array('pipe','w')),
+            $pipes);
         if (is_resource($msgfmt)) {
             fwrite($pipes[0], $po_contents);
             fclose($pipes[0]);
@@ -721,39 +658,36 @@ class PluginBuilder extends Module
         return $mo;
     }
 
-    function ensureComposer()
-    {
-        if (file_exists(dirname(__file__) . '/composer.phar'))
+    function ensureComposer() {
+        if (file_exists(dirname(__file__).'/composer.phar'))
             return true;
 
         return static::getComposer();
     }
 
-    function getComposer()
-    {
+    function getComposer() {
         list($code, $phar) = $this->_http_get('https://getcomposer.org/composer-2.phar');
 
-        if (!($fp = fopen(dirname(__file__) . '/composer.phar', 'wb')))
+        if (!($fp = fopen(dirname(__file__).'/composer.phar', 'wb')))
             $this->fail('Cannot install composer: Unable to write "composer.phar"');
 
         fwrite($fp, $phar);
         fclose($fp);
     }
 
-    function resolveDependencies($autoupdate = true)
-    {
+    function resolveDependencies($autoupdate=true) {
         // Build dependency list
         $requires = $scripts = $extra = [];
-        foreach (glob(dirname(__file__) . '/*/plugin.php') as $plugin) {
+        foreach (glob(dirname(__file__).'/*/plugin.php') as $plugin) {
             $p = (include $plugin);
             if (isset($p['requires']))
-                foreach ($p['requires'] as $lib => $info)
+                foreach ($p['requires'] as $lib=>$info)
                     $requires[$lib] = $info['version'];
             if (isset($p['scripts']))
-                foreach ($p['scripts'] as $name => $script)
+                foreach ($p['scripts'] as $name=>$script)
                     $scripts[$name] = $script;
             if (isset($p['extra']))
-                foreach ($p['extra'] as $package => $namespaces)
+                foreach ($p['extra'] as $package=>$namespaces)
                     $extra[$package] = $namespaces;
         }
 
@@ -780,11 +714,12 @@ EOF;
         $this->ensureComposer();
 
         $php = defined('PHP_BINARY') ? PHP_BINARY : 'php';
-        if (file_exists(dirname(__file__) . "/composer.lock")) {
+        if (file_exists(dirname(__file__)."/composer.lock")) {
             if ($autoupdate)
-                passthru($php . " " . dirname(__file__) . "/composer.phar -v update");
-        } else
-            passthru($php . " " . dirname(__file__) . "/composer.phar -v install");
+                passthru($php." ".dirname(__file__)."/composer.phar -v update");
+        }
+        else
+            passthru($php." ".dirname(__file__)."/composer.phar -v install");
     }
 }
 $registered_modules = array();
@@ -795,3 +730,5 @@ if (php_sapi_name() != "cli")
 $builder = new PluginBuilder();
 $builder->parseOptions();
 $builder->_run(basename(__file__));
+
+?>
