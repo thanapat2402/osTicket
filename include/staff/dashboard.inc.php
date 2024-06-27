@@ -31,7 +31,7 @@ $plots = $report->getPlotData();
                             echo "<option value='$val'>" . __($desc) . "</option>"; ?>
                 </select>
             </label>
-            <button class="green button action-button muted" type="submit">
+            <button class="button action-button muted" type="submit">
                 <?php echo __( 'Refresh');?>
             </button>
             <i class="help-tip icon-question-sign" href="#report_timeframe"></i>

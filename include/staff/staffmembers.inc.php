@@ -109,7 +109,7 @@ $agents->limit($pageNav->getLimit())->offset($pageNav->getStart());
                 <h2><?php echo __('Agents');?></h2>
             </div>
             <div class="pull-right">
-                <a class="green button action-button" href="staff.php?a=add">
+                <a class="button action-button" href="staff.php?a=add">
                     <i class="icon-plus-sign"></i>
                     <?php echo __( 'Add New Agent'); ?>
                 </a>

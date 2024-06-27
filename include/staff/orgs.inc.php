@@ -79,7 +79,7 @@ $orgs->order_by($order . $order_column);
             </div>
             <div class="pull-right">
                 <?php if ($thisstaff->hasPerm(Organization::PERM_CREATE)) { ?>
-                <a class="green button action-button add-org"
+                <a class="button action-button add-org"
                    href="#">
                     <i class="icon-plus-sign"></i>
                     <?php echo __('Add Organization'); ?>

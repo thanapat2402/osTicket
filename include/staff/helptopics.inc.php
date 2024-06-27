@@ -22,7 +22,7 @@ $order_by = 'sort';
                 <button class="button no-confirm" type="submit" name="sort"><i class="icon-save"></i>
                 <?php echo __('Save'); ?></button>
                 <?php } ?>
-                <a href="helptopics.php?a=add" class="green button action-button"><i class="icon-plus-sign"></i> <?php echo __('Add New Help Topic');?></a>
+                <a href="helptopics.php?a=add" class="button action-button"><i class="icon-plus-sign"></i> <?php echo __('Add New Help Topic');?></a>
                 <span class="action-button" data-dropdown="#action-dropdown-more">
            <i class="icon-caret-down pull-right"></i>
             <span ><i class="icon-cog"></i> <?php echo __('More');?></span>

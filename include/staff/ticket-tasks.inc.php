@@ -31,7 +31,7 @@ $showing = $pageNav->showing().' '._N('task', 'tasks', $count);
     <?php
     if ($role && $role->hasPerm(Task::PERM_CREATE)) { ?>
         <a
-        class="green button action-button ticket-task-action"
+        class="button action-button ticket-task-action"
         data-url="tickets.php?id=<?php echo $ticket->getId(); ?>#tasks"
         data-dialog-config='{"size":"large"}'
         href="#tickets/<?php

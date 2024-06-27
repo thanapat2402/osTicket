@@ -49,7 +49,7 @@ else
                 <h2><?php echo __('Email Template Sets'); ?></h2>
             </div>
             <div class="pull-right flush-right">
-                <a href="templates.php?a=add" class="green button action-button"><i class="icon-plus-sign"></i> <?php echo __('Add New Template Set'); ?></a>
+                <a href="templates.php?a=add" class="button action-button"><i class="icon-plus-sign"></i> <?php echo __('Add New Template Set'); ?></a>
                 <span class="action-button" data-dropdown="#action-dropdown-more">
                     <i class="icon-caret-down pull-right"></i>
                     <span ><i class="icon-cog"></i> <?php echo __('More');?></span>

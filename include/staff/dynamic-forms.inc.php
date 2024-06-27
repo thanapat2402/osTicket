@@ -6,7 +6,7 @@
             <h2><?php echo __('Custom Forms'); ?></h2>
         </div>
         <div class="pull-right flush-right">
-            <a href="forms.php?a=add" class="green button action-button"><i class="icon-plus-sign"></i> <?php
+            <a href="forms.php?a=add" class="button action-button"><i class="icon-plus-sign"></i> <?php
                     echo __('Add New Custom Form'); ?></a>
             <span class="action-button" data-dropdown="#action-dropdown-more">
                     <i class="icon-caret-down pull-right"></i>

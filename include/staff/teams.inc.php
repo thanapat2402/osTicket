@@ -52,7 +52,7 @@ $qstr .= '&amp;order='.urlencode($order=='DESC' ? 'ASC' : 'DESC');
             </h2>
         </div>
         <div class="pull-right flush-right">
-            <a href="teams.php?a=add" class="green button action-button"><i class="icon-plus-sign"></i> <?php echo __('Add New Team');?></a>
+            <a href="teams.php?a=add" class="button action-button"><i class="icon-plus-sign"></i> <?php echo __('Add New Team');?></a>
             <span class="action-button" data-dropdown="#action-dropdown-more">
                 <i class="icon-caret-down pull-right"></i>
                 <span ><i class="icon-cog"></i> <?php echo __('More');?></span>

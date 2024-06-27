@@ -80,7 +80,7 @@ $pageNav->setURL('audits.php', $args);
                         ?>
                     </select>
                     &nbsp;&nbsp;
-                    <input type="submit" Value="<?php echo __('Go!');?>" />
+                    <input type="submit" Value="<?php echo __('Enter');?>" />
                 </div>
             </form>
         </div>

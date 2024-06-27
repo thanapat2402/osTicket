@@ -8,7 +8,7 @@ $entries = $schedule->getEntries()
     echo sprintf('All times are in %s timezone',
         $schedule->getTimezone()); ?></div>
 <div class="pull-right">
-    <a class="green button action-button entry-action"
+    <a class="button action-button entry-action"
         href="#schedule/<?php
         echo $schedule->getId(); ?>/entry/add">
         <i class="icon-plus-sign"></i>

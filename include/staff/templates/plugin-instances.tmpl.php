@@ -32,7 +32,7 @@ $modal = $plugin->useModalConfig();
         $newInstanceOptions = $plugin->getNewInstanceOptions();
         if ($newInstanceOptions) {
         ?>
-          <span class="green button action-button pull-right"
+          <span class="button action-button pull-right"
            data-dropdown="#action-dropdown-add">
              <i class="icon-caret-down pull-right"></i>
              <span><i class="icon-plus-sign">&nbsp;<?php echo __('Add New Instance'); ?></i></span>
@@ -57,7 +57,7 @@ $modal = $plugin->useModalConfig();
                     :  'plugins.php?id=%d&a=add-instance#instances',
                     $plugin->getId())
             ?>
-            <a class="green button action-button <?php
+            <a class="button action-button <?php
                 echo $modal ?  'instance-config' : ''; ?>"
                 href="<?php echo $href; ?>" >
                 <i class="icon-plus-sign"></i> <?php echo __('Add New Instance'); ?>

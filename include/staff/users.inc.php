@@ -87,7 +87,7 @@ $users->order_by($order . $order_column);
             </div>
             <div class="pull-right">
                 <?php if ($thisstaff->hasPerm(User::PERM_CREATE)) { ?>
-                <a class="green button action-button popup-dialog"
+                <a class="button action-button popup-dialog"
                    href="#users/add">
                     <i class="icon-plus-sign"></i>
                     <?php echo __('Add User'); ?>

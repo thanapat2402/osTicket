@@ -47,7 +47,7 @@ $.widget( "jb.overflowmenu", {
         var self = this;
 
         this.element
-            .addClass('jb-overflowmenu');
+            //.addClass('jb-overflowmenu');
 
         this.primaryMenu = this.element
                         .children( this.options.itemsParentTag )

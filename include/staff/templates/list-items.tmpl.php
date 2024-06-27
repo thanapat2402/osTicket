@@ -19,7 +19,7 @@
     <div class="pull-right">
 <?php
 if ($list->allowAdd()) { ?>
-        <a class="green button action-button field-config"
+        <a class="button action-button field-config"
             href="#list/<?php
             echo $list->getId(); ?>/item/add">
             <i class="icon-plus-sign"></i>

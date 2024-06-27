@@ -6,7 +6,7 @@ body {
 }
 body, html {
     background:#f0f2f5;
-    color:#000;
+    color:#2C2C2C;
     font-size:14px;
     margin:0;
     padding:0;
@@ -32,7 +32,7 @@ a:hover i[class^="icon-"],
 }
 
 div#header a {
-    color:rgb(1 66 126);
+    color:#3180cf
 }
 
 .centered {
@@ -125,16 +125,14 @@ a time {
 
 
 #container {
-    width:960px;
+    width:100%;
     margin:0 auto 20px auto;
 }
 
 #header {
     height:76px;
-    border-left:1px solid #aaa;
-    border-right:1px solid #aaa;
-    background-color: rgb(248,248,248);
-    box-shadow: inset 0 -10px 8px -5px rgba(0,0,0,0.1);
+    background-color: #fff;
+    margin-bottom: 25px;
 }
 
 #logo {
@@ -165,10 +163,11 @@ a time {
     width:auto;
     max-width:630px;
     margin:10px;
-    background:#eee;
-    border:1px solid #ccc;
+    background:#fff;
+    border:1px solid #f0f2f5;
     padding:8px;
     text-align:center;
+    border-radius: 5px;
 }
 
 #nav, #sub_nav {
@@ -177,9 +176,8 @@ a time {
     padding:0 20px;
     height:26px;
     line-height:26px;
-    border-left:1px solid #aaa;
-    border-right:1px solid #aaa;
     white-space: nowrap;
+
 }
 
 #nav .active, #sub_nav > li  {
@@ -189,11 +187,16 @@ a time {
 }
 
 #nav {
-    background:#eee;
+    background:#fff;
     padding-top:4px;
     z-index:200;
-    border-top:1px solid #ddd;
-    border-bottom:1px solid #c5d9ec;
+    border-top:1px solid #f0f2f5;
+    border-bottom:1px solid #f0f2f5;
+    width: 95%;
+    margin-left: auto;
+    margin-right:auto;
+    border-top-left-radius: 5px; /* Top-left corner */
+    border-top-right-radius: 5px; /* Top-right corner */
 }
 
 #nav .active, #nav .inactive {
@@ -219,7 +222,7 @@ a time {
 }
 
 #nav .active a {
-    color:#004a80;
+    color:#3180cf;
     font-weight:bold;
 }
 
@@ -228,14 +231,13 @@ a time {
 }
 
 #nav li.active, #nav li.inactive:hover {
-    box-shadow: 4px -3px 6px -3px rgba(0,0,0,0.3);
-    border-color: #c5d9ec;
+   border-bottom: 2px solid #3180cf;
 }
 #nav li.active {
-    background-color: #f7f7f7;
+    background-color: #fff;
 }
 #nav li.inactive:hover {
-    background-color: #fbfbfb;
+    background-color: #589edb;
 }
 
 #nav li.inactive > ul {
@@ -319,9 +321,11 @@ a time {
 /***********************************************************************/
 
 #sub_nav {
-    background:#f7f7f7;
-    border-bottom:1px solid #bebebe;
+    background:#fff;
     padding: 2px 20px;
+    width: 95%;
+    margin-left: auto;
+    margin-right:auto
 }
 #customQ_nav {
     clear:both;
@@ -350,10 +354,10 @@ a time {
 #sub_nav > li > a,
 #customQ_nav .jb-overflowmenu-menu-primary li.item > a {
     display:inline-block;
-    padding:0 10px 0 21px;
+    padding:5px 10px 0 21px;
     background-position:0 50%;
     background-repeat:no-repeat;
-    color:#000;
+    color:#2C2C2C;
 }
 
 #customQ_nav .jb-overflowmenu-menu-primary li.item:hover {
@@ -367,13 +371,14 @@ a time {
 
 #sub_nav > li > a:hover,
 #customQ_nav .jb-overflowmenu-menu-primary li.item:hover > a {
-    color:#E65524;
+    color:#3180cf;
     text-decoration: none;
 }
 
 #sub_nav a.active, #sub_nav li.active > a, #sub_nav li.child.active > a
 #customQ_nav .jb-overflowmenu-menu-primary li.item > a.active {
     font-weight:bold;
+
 }
 
 #sub_nav li.child.active > a {
@@ -723,8 +728,7 @@ a time {
 
 .jb-overflowmenu {
     position: relative;
-    height:35px;
-    width: 960px;
+
 }
 
 
@@ -1077,16 +1081,20 @@ a.Icon:hover {
 
 #content {
     clear:both;
-    border:1px solid #aaa;
     border-top:none;
-    border-bottom:1px solid #bbb;
-    padding:10px 10px 20px 10px;
+    border-bottom:none;
+    padding:10px 20px 20px 20px;
     background:#fff;
+    width: 95%;
+    margin-left: auto;
+    margin-right:auto;
+    border-bottom-right-radius: 5px; 
+    border-bottom-left-radius: 5px; 
     
 }
 
 a {
-    color:#184E81;
+    color:#3180cf;
 }
 
 #footer {
@@ -1123,12 +1131,19 @@ table.dashboard-stats tbody:nth-child(2) tr:hover th {
     color:#000;
 }
 
-table { vertical-align:top; }
+table { 
+    vertical-align:top; 
+    width: 100%;
+}
 
 table.list {
     clear:both;
-    background:#ccc;
+    background:#f0f2f5;
+    border: 1px solid #f0f2f5;
+    border-radius: 5px;
     margin: 2px 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 table.list caption {
@@ -1140,7 +1155,7 @@ table.list caption {
 }
 
 table.list thead th {
-    background-color:#eee;
+    background-color:rgba(252, 252, 253,0.8);
     color:#000;
     text-align:left;
     vertical-align:top;
@@ -1154,7 +1169,7 @@ table.list th a {
     padding: 4px 5px;
 }
 
-table.list thead th a { padding-right: 15px; display: block; white-space: nowrap; color: #000; background: url('../images/asc_desc.gif') 100% 50% no-repeat; }
+table.list thead th a { padding-right: 15px; display: block; white-space: nowrap; color: #2C2C2C; background: url('../images/asc_desc.gif') 100% 50% no-repeat; }
 
 table.list thead th a.asc { background: url('../images/asc.gif') 100% 50% no-repeat #cfe6ff; }
 table.list thead th a.desc { background: url('../images/desc.gif') 100% 50% no-repeat #cfe6ff; }
@@ -1166,7 +1181,7 @@ table.list tbody td {
 }
 
 table.list tbody td { background: #fff; padding: 4px 3px; vertical-align: top; }
-table.list tbody tr:nth-child(2n+1) td { background-color: #f0faff; }
+table.list tbody tr:nth-child(2n+1) td { background-color: #fff; }
 table.list tbody tr:hover td { background: #ffe; }
 table.list tbody tr:nth-child(2n+1):hover td { background: #ffd; }
 /* row highlighting on hover + select */
@@ -1176,7 +1191,7 @@ table.list tbody tr:hover td.nohover, table.list tbody tr.highlight td.nohover {
 
 
 table tfoot td {
-    background:#eee;
+    background:#fff;
     padding: 1px;
 }
 
@@ -1358,9 +1373,10 @@ input[type=text], input[type=password], textarea, input {
 .form_table th, div.section-break {
     text-align:left;
     border:1px solid #ccc;
-    background:#eee;
+    background:#fff;
     padding:0;
     padding:5px;
+    
 }
 
 div.section-break h3 {
@@ -1380,13 +1396,14 @@ div.section-break h3 {
 }
 .form_table th em {
     display:block;
-    color:#000;
+    color:#2C2C2C;
 }
 
 .settings_table {
     margin-top:2px;
     border-left:1px solid #ddd;
     border-right:1px solid #ddd;
+    border-radius: 5px;
 }
 
 .settings_table td {
@@ -1421,7 +1438,7 @@ h2 {
     margin:0 0 0.7em;
     padding:0;
     font-size:1.4em;
-    color:#0A568E;
+    color:#3180cf;
 }
 
 h2 i {
@@ -1706,10 +1723,8 @@ ul.tabs {
     margin:0;
     text-align:left;
     height:29px;
-    border-bottom:1px solid #aaa;
-    background:#eef3f8;
+    background:#FCFCFD;
     position: relative;
-    box-shadow: inset 0 -5px 10px -9px rgba(0,0,0,0.3);
 }
 
 #response_options ul.tabs {
@@ -1791,7 +1806,8 @@ ul.tabs li a:hover {
 ul.tabs li.active a {
     font-weight: bold;
     color: #222;
-    color: rgba(0,0,0,0.8);
+    color:#3180cf;
+    
 }
 
 ul.tabs li.empty {
@@ -2447,12 +2463,12 @@ input[type="button"],
     display:inline-block;
     vertical-align:bottom;
     margin:0 4px;
-    height:22px;
+    height:25px;
     line-height: 22px;
-    border: none;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.25) inset;
+    border: 0.5px solid #3180cf; 
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
     padding:2px 11px;
-    color: #555;
+    color: #3180cf;
     background-color: #f0f0f0;
     background-color: rgba(0,0,0,0.02);
     -webkit-border-radius: 3px;
@@ -2550,14 +2566,23 @@ select + .button {
 
 .green.button:hover {
   background-color: inherit;
-  box-shadow: 0 0 0 2px #16ab39 inset;
+  box-shadow: 0 0 0 1px #16ab39 inset;
   color: #16ab39;
+  border: 0.5px solid #16ab39;
 }
 
 .red.button:hover {
   background-color: inherit;
-  box-shadow: 0 0 0 2px #d01919 inset;
+  box-shadow: 0 0 0 1px #d01919 inset;
   color: #d01919;
+  border: 0.5px solid #d01919;
+}
+
+.button.red {
+  background-color: #fff;
+  box-shadow: 0 0 0 0.5px #d01919 inset;
+  color: #d01919;
+  border: 0.5px solid #d01919;
 }
 
 .button:hover {
@@ -2591,10 +2616,9 @@ button[type=submit], input[type="submit"], .primary.button {
 .action-button:hover, .action-button:active,
 input[type=button]:hover, input[type=button]:active,
 input[type=reset]:hover, input[type=reset]:active {
-    color: black;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.5) inset;
-    background-color: #ddd;
-    background-color: rgba(0, 0, 0, 0.08);
+    color: #589edb;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+
 }
 
 button[type=submit]:hover, input[type=submit]:hover, input[type=submit]:active {
@@ -3660,13 +3684,11 @@ table.grid.form caption {
 }
 
 #basic_search {
-  background-color: #f4f4f4;
+  background-color: #FCFCFD;
   margin: -10px 0;
   margin-bottom: 5px;
   padding: 8px;
-  box-shadow: inset 0 4px 12px -10px black;
-  border-bottom: 1px dotted #aaa;
-  border-radius: 0 0 5px 5px;
+
 }
 
 #basic-ticket-search {

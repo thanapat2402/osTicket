@@ -6,7 +6,7 @@
             <h2><?php echo __('Schedules'); ?></h2>
         </div>
         <div class="pull-right flush-right">
-            <a class="green button action-button" id="new-schedule"
+            <a class="button action-button" id="new-schedule"
                 href="#schedule/add">
                 <i class="icon-plus-sign"></i>
                 <?php echo __('Add New Schedule'); ?>

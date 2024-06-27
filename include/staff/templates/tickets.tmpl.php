@@ -80,7 +80,7 @@ TicketForm::ensureDynamicDataView();
     <div class="pull-right flush-right">
         <?php
         if ($user) { ?>
-            <a class="green button action-button" href="tickets.php?a=open&uid=<?php echo $user->getId(); ?>">
+            <a class="button action-button" href="tickets.php?a=open&uid=<?php echo $user->getId(); ?>">
                 <i class="icon-plus"></i> <?php print __('Create New Ticket'); ?></a>
         <?php
         } ?>

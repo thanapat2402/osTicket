@@ -194,7 +194,7 @@ if (!defined('OSTADMININC') || !$thisstaff || !$thisstaff->isAdmin() || !$config
                                    onclick="javascript:
                                     $.dialog($(this).attr('href').substr(1), 201);
                                     return false;" class="pull-left">
-                                    <i class="icon-file-text icon-2x" style="color:#bbb;"></i>
+                                    <i class="icon-file-text icon-2x" style="color:#3180cf;"></i>
                                 </a>
                                 <span style="display:inline-block;width:90%;width:calc(100% - 32px);padding-left:10px;line-height:1.2em">
                                 <a href="#ajax.php/content/<?php echo $id; ?>/manage"

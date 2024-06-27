@@ -6,7 +6,7 @@
             <h2><?php echo __('Custom Lists'); ?></h2>
         </div>
         <div class="pull-right flush-right">
-            <a href="lists.php?a=add" class="green button action-button"><i class="icon-plus-sign"></i> <?php
+            <a href="lists.php?a=add" class="button action-button"><i class="icon-plus-sign"></i> <?php
                     echo __('Add New Custom List'); ?></a>
 
             <span class="action-button" data-dropdown="#action-dropdown-more">

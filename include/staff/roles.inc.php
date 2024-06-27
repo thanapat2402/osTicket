@@ -5,7 +5,7 @@
             <h2><?php echo __('Roles'); ?></h2>
         </div>
         <div class="pull-right flush-right">
-            <a href="roles.php?a=add" class="green button action-button"><i class="icon-plus-sign"></i> <?php
+            <a href="roles.php?a=add" class="button action-button"><i class="icon-plus-sign"></i> <?php
 echo __('Add New Role'); ?></a>
             <span class="action-button" data-dropdown="#action-dropdown-more">
                 <i class="icon-caret-down pull-right"></i>

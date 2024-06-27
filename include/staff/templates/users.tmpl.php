@@ -66,7 +66,7 @@ else
 <div style="margin-top:5px;" class="pull-left"><b><?php echo $showing; ?></b></div>
 <?php if ($thisstaff->hasPerm(User::PERM_EDIT)) { ?>
 <div class="pull-right flush-right" style="margin-bottom:10px;">
-    <a href="#orgs/<?php echo $org->getId(); ?>/add-user" class="green button action-button add-user"
+    <a href="#orgs/<?php echo $org->getId(); ?>/add-user" class="button action-button add-user"
         ><i class="icon-plus"></i> <?php echo __('Add User'); ?></a>
     <a href="#orgs/<?php echo $org->getId(); ?>/import-users" class="button action-button add-user">
         <i class="icon-cloud-upload icon-large"></i>
