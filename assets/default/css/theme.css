@@ -314,7 +314,6 @@ h2,
   cursor: pointer;
   font-family: helvetica, arial, sans-serif;
 }
-
 .button:hover {
   background-color: #111;
   color: #fff;
@@ -725,7 +724,7 @@ span.required {
 #clientLogin td em,
 #ticketForm div em,
 #clientLogin div em {
-  color: #e22d2d;
+  color: #777;
 }
 #ticketForm td .captcha,
 #clientLogin td .captcha,
